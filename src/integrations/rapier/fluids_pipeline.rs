@@ -205,6 +205,9 @@ impl<'a> CouplingManager for ColliderCouplingManager<'a> {
                             match particle {
                                 HGridEntry::FluidParticle(fluid_id, particle_id) => {
                                     let fluid = &mut fluids[*fluid_id];
+                                    if !boundary.interaction_groups.test(fluids[*fluid_id].interaction_groups) {
+                                        continue;
+                                    }
                                     let particle_pos = fluid.positions[*particle_id]
                                         + fluid.velocities[*particle_id] * timestep.dt();
 
